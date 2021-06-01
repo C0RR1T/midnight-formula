@@ -1,5 +1,4 @@
 use std::io;
-use std::panic::resume_unwind;
 
 fn main() {
     let std = io::stdin();
@@ -8,7 +7,7 @@ fn main() {
         let mut amount_string: String = String::new();
         println!("a, b, c");
         std.read_line(&mut inputs).unwrap();
-        let mut iter = inputs.split(",")
+        let mut iter = inputs.split(',')
             .map(|s| s.trim())
             .map(|s| s.parse().unwrap_or_else(|a| {
                 println!("Not a number: {}", a);
@@ -19,8 +18,8 @@ fn main() {
         let c = iter.next().unwrap_or_else(illegal_input);
         println!("Forbidden numbers");
         std.read_line(&mut amount_string).unwrap();
-        let amount: Vec<f64> = if amount_string.trim().len() > 0 {
-            amount_string.split(",")
+        let amount: Vec<f64> = if !amount_string.is_empty() {
+            amount_string.split(',')
                 .map(|s| s.trim().parse().unwrap())
                 .collect()
         } else { Vec::new() };
@@ -31,9 +30,9 @@ fn main() {
             Some((a, b)) => {
                 let mut result_string = String::from("L = {");
                 if !amount.contains(&a) {
-                    result_string.push_str((&a.to_string()));
+                    result_string.push_str(&a.to_string());
                 }
-                if amount.contains(&b) {
+                if !amount.contains(&b) {
                     let mut amountb_string = String::from(",");
                     amountb_string.push_str(&b.to_string());
                     result_string.push_str(&amountb_string);
