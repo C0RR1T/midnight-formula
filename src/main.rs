@@ -18,7 +18,7 @@ fn main() {
         let c = iter.next().unwrap_or_else(illegal_input);
         println!("Forbidden numbers");
         std.read_line(&mut amount_string).unwrap();
-        let amount: Vec<f64> = if !amount_string.is_empty() {
+        let amount: Vec<f64> = if !amount_string.trim().is_empty() {
             amount_string.split(',')
                 .map(|s| s.trim().parse().unwrap())
                 .collect()
@@ -33,7 +33,12 @@ fn main() {
                     result_string.push_str(&a.to_string());
                 }
                 if !amount.contains(&b) {
-                    let mut amountb_string = String::from(",");
+                    let mut amountb_string =
+                        if !amount.contains(&a) {
+                            String::from(",")
+                        } else {
+                            String::from("")
+                        };
                     amountb_string.push_str(&b.to_string());
                     result_string.push_str(&amountb_string);
                 }
